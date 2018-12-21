@@ -1,24 +1,14 @@
-#!/usr/bin/python
+from flask import Flask
 
-from http.server import BaseHTTPRequestHandler, HTTPServer
 
-PORT_NUMBER = 8080
+app = Flask(__name__)
 
-class MyHandler(BaseHTTPRequestHandler):
 
-  def do_GET(self):
-    """Handler for GET requests"""
-    self.send_response(200)
-    self.send_header('Content-type','image/png')
-    self.end_headers()
-    with open('logo.png', 'rb') as f:
-      self.wfile.write(f.read())
+@app.route('/')
+def hello():
+    return 'Hello from flask! Now with more content :)'
 
-try:
-  server = HTTPServer(('', PORT_NUMBER), MyHandler)
-  print('Started httpserver on port', PORT_NUMBER)
-  server.serve_forever()
 
-except KeyboardInterrupt:
-  server.server_close()
-  print('Stopping server')
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=8080)
+
